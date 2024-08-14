@@ -111,6 +111,12 @@
             <input type="radio" class="btn-check" name="sexo" id="sexoF" value="Feminino">
             <label class="btn btn-outline-danger" for="sexoF"><i class="bi bi-gender-female"></i> Feminino</label>
           </div>
+          <div class="form-group mt-3">
+            <label for="plano">Plano</label>
+            <select class="form-control" name="plano" id="plano">
+                <!-- As opções serão adicionadas dinamicamente pelo JavaScript -->
+            </select>
+          </div>
           <div class="form-group">
             <input type="hidden" class="form-control" name="id" id="id">
           </div>
@@ -161,6 +167,7 @@
   <script src="js/firebase/dadosCliente.js"></script>
   <script src="js/firebase/upload.js"></script>
   <script src="js/util/alerta.js"></script>
+  <script src="js/firebase/listarPlanos.js"></script>
 
 </body>
 

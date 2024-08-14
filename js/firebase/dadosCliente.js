@@ -34,8 +34,9 @@ async function obtemDados(collection) {
     <th>Sexo</th>
     <th>Peso</th>
     <th>Altura</th>
-    <th>Opções</th>`
-
+    <th>Plano</th>
+    <th>Opções</th>
+    `
 
 
     snapshot.forEach(item => {
@@ -51,6 +52,7 @@ async function obtemDados(collection) {
       novaLinha.insertCell().textContent = item.val().sexo
       novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().peso)
       novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().altura)
+      novaLinha.insertCell().textContent = item.val().plano
       novaLinha.insertCell().innerHTML = `<button class='btn btn-sm btn-danger' onclick=remover('${db}','${id}')><i class="bi bi-trash"></i></button>
       <button class='btn btn-sm btn-warning' onclick=carregaDadosAlteracao('${db}','${id}')><i class="bi bi-pencil-square"></i></button>`
 
@@ -171,7 +173,8 @@ async function incluir(event, collection) {
     peso: values.peso,
     altura: values.altura,
     cpf: values.cpf,
-    foto: imgSrc ? imgSrc : "", // Envia imgSrc apenas se não estiver vazio    
+    foto: imgSrc ? imgSrc : "", // Envia imgSrc apenas se não estiver vazio 
+    plano: values.plano,   
     usuarioInclusao: {
       uid: usuarioAtual.uid,
       nome: usuarioAtual.displayName,
@@ -213,6 +216,7 @@ async function alterar(event, collection) {
     peso: values.peso,
     altura: values.altura,
     cpf: values.cpf,
+    plano: values.plano,
     usuarioAlteracao: {
       uid: usuarioAtual.uid,
       nome: usuarioAtual.displayName,

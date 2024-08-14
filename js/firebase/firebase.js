@@ -21,13 +21,13 @@
 
 // Cole as informações do seu RealTime Database do Firebase abaixo:
 const firebaseConfig = {
-  apiKey: "AIzaSyAg9EaCqvHmCShQllvy4FOPedRRS6-eMSo",
-  authDomain: "crud-firebase-vanilla-js.firebaseapp.com",
-  databaseURL: "https://crud-firebase-vanilla-js-default-rtdb.firebaseio.com",
-  projectId: "crud-firebase-vanilla-js",
-  storageBucket: "crud-firebase-vanilla-js.appspot.com",
-  messagingSenderId: "595096453227",
-  appId: "1:595096453227:web:a73295471f9e9a3b74f12e"
+  apiKey: "AIzaSyC0iM2c3piOlkl5yKkQBbm5HwqLa2atbBM",
+  authDomain: "taskmanager-f44f3.firebaseapp.com",
+  projectId: "taskmanager-f44f3",
+  storageBucket: "taskmanager-f44f3.appspot.com",
+  messagingSenderId: "780082236029",
+  appId: "1:780082236029:web:031dad33bd31b277d0bf14",
+  measurementId: "G-N10PXS5Q2F"
 };
 
 
