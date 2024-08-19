@@ -9,23 +9,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right, #FB724C, #FEDCD2);
+  background: linear-gradient(to right, #fb4c4c, #fed2d2);
 }
 
 .fundo-laranja-claro{
-  background-color: #FEDCD2;
+  background-color: #fed2d2;
 }
 
 .fundo-laranja-escuro{
-  background-color: #FB724C;
+  background-color: #fb4c4c;
 }
 
 .laranja-escuro{
-  color: #FB724C;
+  color: #fb4c4c;
 }
 
 .laranja-claro{
-  color: #FEDCD2;
+  color: #fed2d2;
 }
 
 .avatar {

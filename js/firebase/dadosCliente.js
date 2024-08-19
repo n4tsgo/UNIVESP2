@@ -32,12 +32,11 @@ async function obtemDados(collection) {
     <th>Nascimento</th>
     <th>Email</th>
     <th>Sexo</th>
-    <th>Peso</th>
-    <th>Altura</th>
+    <th>Nível</th>
+    <th>Livro</th>
     <th>Plano</th>
     <th>Opções</th>
     `
-
 
     snapshot.forEach(item => {
       // Dados do Firebase
@@ -50,8 +49,8 @@ async function obtemDados(collection) {
       novaLinha.insertCell().textContent = new Date(item.val().nascimento).toLocaleDateString('pt-BR', { timeZone: 'UTC' })
       novaLinha.insertCell().innerHTML = '<small>' + item.val().email + '</small>'
       novaLinha.insertCell().textContent = item.val().sexo
-      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().peso)
-      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().altura)
+      novaLinha.insertCell().textContent = item.val().nivel
+      novaLinha.insertCell().textContent = new Intl.NumberFormat('pt-BR', { style: 'decimal', minimumFractionDigits: 2 }).format(item.val().livro)
       novaLinha.insertCell().textContent = item.val().plano
       novaLinha.insertCell().innerHTML = `<button class='btn btn-sm btn-danger' onclick=remover('${db}','${id}')><i class="bi bi-trash"></i></button>
       <button class='btn btn-sm btn-warning' onclick=carregaDadosAlteracao('${db}','${id}')><i class="bi bi-pencil-square"></i></button>`
@@ -81,15 +80,15 @@ async function carregaDadosAlteracao(db, id) {
     document.getElementById('cpf').value = snapshot.val().cpf
     document.getElementById('email').value = snapshot.val().email
     document.getElementById('nascimento').value = snapshot.val().nascimento
-    document.getElementById('peso').value = snapshot.val().peso
-    document.getElementById('altura').value = snapshot.val().altura
+    document.getElementById('nivel').value = snapshot.val().nivel
+    document.getElementById('livro').value = snapshot.val().livro
     if (snapshot.val().sexo === 'Masculino') {
       document.getElementById('sexoM').checked = true
     } else {
       document.getElementById('sexoF').checked = true
     }
   })
-
+  document.getElementById('plano').value = snapshot.val().plano
   document.getElementById('nome').focus() //Definimos o foco no campo nome
 }
 
@@ -133,13 +132,13 @@ function salvar(event, collection) {
     document.getElementById('nascimento').focus()
     alerta('⚠️A data de nascimento informada é inválida ou posterior à data de hoje!', 'warning')
   }
-  else if (document.getElementById('peso').value < 0 || document.getElementById('peso').value > 300) { 
-    document.getElementById('peso').focus()
-    alerta(`⚠️O peso deve ser um número entre 0 a 300 e foi informado o valor ${document.getElementById('peso').value}`, 'warning') 
+  else if (document.getElementById('nivel').value === '') { 
+    document.getElementById('nivel').focus()
+    alerta(`⚠️O nível deve ser diferente de vazio ${document.getElementById('nivel').value}`, 'warning') 
   }
-  else if (document.getElementById('altura').value < 0 || document.getElementById('altura').value > 2.5) { 
-    document.getElementById('altura').focus()
-    alerta(`⚠️A altura deve ser um número entre 0 a 2.50 e foi informado o valor ${document.getElementById('altura').value}`, 'warning') 
+  else if (document.getElementById('livro').value < 0 || document.getElementById('livro').value > 10) { 
+    document.getElementById('livro').focus()
+    alerta(`⚠️O livro deve ser um número entre 0 a 10 e foi informado o valor ${document.getElementById('livro').value}`, 'warning') 
   }
   else if (document.getElementById('id').value !== '') { alterar(event, collection) }
   else { incluir(event, collection) }
@@ -157,23 +156,47 @@ async function incluir(event, collection) {
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
   // Obtendo a URL da imagem do avatar do cliente
-  let imgSrc;
-  const inputFile = document.querySelector('[name="foto"]');
-  if (inputFile.files && inputFile.files[0]) {
-    imgSrc = URL.createObjectURL(inputFile.files[0]);
-  } else {
-    imgSrc = "";
+  // let imgSrc;
+  // const inputFile = document.querySelector('[name="foto"]');
+  // if (inputFile.files && inputFile.files[0]) {
+  //   imgSrc = URL.createObjectURL(inputFile.files[0]);
+  // } else {
+  //   imgSrc = "";
+  // }
+  // Supondo que você já tenha inicializado o Firebase
+let fileUrl = "";
+const inputFile = document.querySelector('[name="foto"]');
+if (inputFile.files && inputFile.files[0]) {
+  const randomName = Date.now() + '-' + Math.random().toString(36).substring(2, 15);
+  const file = inputFile.files[0];
+  
+  // Referência ao Firebase Storage
+  const storageRef = firebase.storage().ref();
+  
+  // Cria uma referência para o arquivo a ser armazenado
+  const fileRef = storageRef.child('clientes/' + randomName + '.' + file.name.split('.').pop());
+
+  try {
+    // Fazendo o upload do arquivo
+    const snapshot = await fileRef.put(file);
+    fileUrl = await snapshot.ref.getDownloadURL();
+    console.log('Link da imagem:', fileUrl);
+  } catch (error) {
+    console.error('Erro ao fazer upload:', error);
   }
+} else {
+  console.error('Nenhum arquivo selecionado.');
+}
   //Enviando os dados dos campos para o Firebase
   return await firebase.database().ref(collection).push({
     nome: values.nome.toUpperCase(),
     email: values.email.toLowerCase(),
     sexo: values.sexo,
     nascimento: values.nascimento,
-    peso: values.peso,
-    altura: values.altura,
+    nivel: values.nivel,
+    livro: values.livro,
     cpf: values.cpf,
-    foto: imgSrc ? imgSrc : "", // Envia imgSrc apenas se não estiver vazio 
+    foto: fileUrl ? fileUrl : "", // Envia imgSrc apenas se não estiver vazio 
     plano: values.plano,   
     usuarioInclusao: {
       uid: usuarioAtual.uid,
@@ -213,8 +236,8 @@ async function alterar(event, collection) {
     email: values.email.toLowerCase(),
     sexo: values.sexo,
     nascimento: values.nascimento,
-    peso: values.peso,
-    altura: values.altura,
+    nivel: values.nivel,
+    livro: values.livro,
     cpf: values.cpf,
     plano: values.plano,
     usuarioAlteracao: {

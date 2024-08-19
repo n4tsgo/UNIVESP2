@@ -1,18 +1,3 @@
-<!--/**
- * Copyright 2023 Prof. Ms. Ricardo Leme All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -22,7 +7,7 @@
   <!-- Bootstrap 5 CSS-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="images/fatecitu.png">
+  <link rel="icon" type="image/png" href="images/univesplogo.png">
   <link rel="stylesheet" href="css/estilo.css">
   <title>Menu Inicial</title>
 </head>
@@ -30,7 +15,7 @@
 <body onload="verificaLogado();obtemDados('clientes')">
   <nav class="navbar navbar-expand-lg navbar-light fundo-laranja-claro">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Fatec Gym</a>
+      <a class="navbar-brand" href="#">Escola de Inglês</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -41,7 +26,7 @@
             <a class="nav-link active" aria-current="page" href="home.html"><i class="bi bi-house"></i> Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="clientes.html"><i class="bi bi-person-vcard"></i> Clientes</a>
+            <a class="nav-link active" href="clientes.html"><i class="bi bi-person-vcard"></i> Alunos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="planos.html"><i class="bi bi-award"></i> Planos</a>
@@ -64,14 +49,14 @@
     </div>
   </nav>
   <div class="container-fluid p-2 fundo-laranja-escuro text-light text-center">
-    <h1>Controle da Academia</h1>
+    <h1>Controle da Escola</h1>
 
   </div>
   <div id="mensagemAlerta"></div>
   <div class="container-fluid mb-5">
     <div class="row">
       <div class="col-md-5">
-        <h3 class="laranja-escuro"><i class="bi bi-person-badge"></i>Cadastro de Clientes</h3>
+        <h3 class="laranja-escuro"><i class="bi bi-person-badge"></i>Cadastro de Alunos</h3>
         <form id="formCadastro" method="post">
           <div class="form-group mt-3">
             <label for="nome">Nome</label>
@@ -97,12 +82,12 @@
             <input type="file" class="form-control" name="foto" id="foto" accept="image/*" maxlength="1000000" required>
           </div>
           <div class="form-group mt-3">
-            <label for="peso">Peso</label>
-            <input type="number" class="form-control" name="peso" id="peso" min="0" max="300" step="0.10">
+            <label for="nivel">Nível</label>
+            <input type="text" class="form-control" name="nivel" id="nivel">
           </div>
           <div class="form-group mt-3">
-            <label for="altura">Altura</label>
-            <input type="number" class="form-control" name="altura" id="altura" min="0" max="2.5" step="0.10">
+            <label for="livro">Livro</label>
+            <input type="number" class="form-control" name="livro" id="livro" min="0" max="10">
           </div>
           <div class="form-group mt-3">
             <label for="sexo" class="me-3">Sexo</label>
@@ -128,7 +113,7 @@
 
 
       <div class="col-md-7">
-        <h3 class="laranja-escuro"><i class="bi bi-database-check"></i>Listagem de Clientes</h3>
+        <h3 class="laranja-escuro"><i class="bi bi-database-check"></i>Listagem de Alunos</h3>
         <button class="btn fundo-laranja-escuro" type="button" disabled id="carregandoDados">
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           Carregando os dados...
@@ -151,7 +136,7 @@
       <div class="row">
         <div class="col-md-6">
           
-       <p>Fatec Gym &copy; - Todos os direitos reservados</p>
+       <p>Escola de Inglês&copy; - Copyright</p>
         </div>
       </div>
     </div>
@@ -170,5 +155,4 @@
   <script src="js/firebase/listarPlanos.js"></script>
 
 </body>
-
 </html>
