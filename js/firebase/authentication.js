@@ -125,7 +125,7 @@ function verificaLogado() {
         //Coloca a foto do usuário ao lado do botáo Logout
         let imagemUsuario = document.getElementById('imagemUsuario')
         user.photoURL ? imagemUsuario.innerHTML = `<img src="${user.photoURL}" alt="Foto do Usuário" title="${user.displayName}" class="img rounded-circle pe-2 .d-sm-none" width="48" />`
-                      : imagemUsuario.innerHTML = `<img src="https://robohash.org/${user.email}" alt="Foto do Usuário" title="${user.email}" class="img rounded-circle pe-2" width="48" />`
+                      : imagemUsuario.innerHTML = `<img src="https://images.pexels.com/photos/753501/pexels-photo-753501.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Foto do Usuário" title="${user.email}" class="img rounded-circle pe-2" width="48" />`
       } else {
         console.error('Usuário não logado. Redirecionando...')
         window.location.href = `${urlApp}/`
