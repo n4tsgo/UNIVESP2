@@ -150,8 +150,14 @@ function verificaLogado() {
     ultimoAcesso: new Date()
   });
 }
-
-
+module.exports = {
+  novoUsuario,
+  loginFirebase,
+  loginGoogle,
+  logoutFirebase,
+  verificaLogado,
+  salvaDadosUsuario
+};
 /**
  * errors.
  * Constante com a tradução em pt-BR dos principais erros de autenticação

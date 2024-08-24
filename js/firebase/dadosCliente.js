@@ -58,7 +58,7 @@ async function obtemDados(collection) {
     })
     let rodape = tabela.insertRow()
     rodape.className = 'fundo-laranja-claro'
-    rodape.insertCell().colSpan = "7"
+    rodape.insertCell().colSpan = "8"
     rodape.insertCell().innerHTML = totalRegistros(collection)
 
   })
@@ -219,7 +219,6 @@ if (inputFile.files && inputFile.files[0]) {
     })
 
 }
-
 async function alterar(event, collection) {
   let usuarioAtual = firebase.auth().currentUser
   let botaoSalvar = document.getElementById('btnSalvar')
@@ -228,6 +227,29 @@ async function alterar(event, collection) {
   //Obtendo os campos do formulário
   const form = document.forms[0];
   const data = new FormData(form);
+  let fileUrl = "";
+  const inputFile = document.querySelector('[name="foto"]');
+  if (inputFile.files && inputFile.files[0]) {
+    const randomName = Date.now() + '-' + Math.random().toString(36).substring(2, 15);
+    const file = inputFile.files[0];
+    
+    // Referência ao Firebase Storage
+    const storageRef = firebase.storage().ref();
+    
+    // Cria uma referência para o arquivo a ser armazenado
+    const fileRef = storageRef.child('clientes/' + randomName + '.' + file.name.split('.').pop());
+
+    try {
+      // Fazendo o upload do arquivo
+      const snapshot = await fileRef.put(file);
+      fileUrl = await snapshot.ref.getDownloadURL();
+      console.log('Link da imagem:', fileUrl);
+    } catch (error) {
+      console.error('Erro ao fazer upload:', error);
+    }
+  } else {
+    console.error('Nenhum arquivo selecionado.');
+  }
   //Obtendo os valores dos campos
   const values = Object.fromEntries(data.entries());
   //Enviando os dados dos campos para o Firebase
@@ -237,6 +259,7 @@ async function alterar(event, collection) {
     sexo: values.sexo,
     nascimento: values.nascimento,
     nivel: values.nivel,
+    foto: fileUrl ? fileUrl : "",
     livro: values.livro,
     cpf: values.cpf,
     plano: values.plano,
