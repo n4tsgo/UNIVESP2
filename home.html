@@ -72,6 +72,26 @@
     <div class="card-body">
       <h5 class="card-title">Seja bem vindo!</h5>
       <p class="card-text"><i class="bi bi-arrow-up-left-square"></i> Selecionar no menu superior a opção desejada</p>
+      <p class="card-text"><i class="bi bi-arrow-down-right-square"></i> Frase do momento:</p>
+      <p class="card-text" id="frase-motivacional">Frase do momento</p>
+      <script>
+        async function carregarFrase() {
+            try {
+                // Fazendo requisição para a API Advice Slip
+                const resposta = await fetch("https://api.adviceslip.com/advice");
+                const dados = await resposta.json();
+                
+                // Atualizando o conteúdo da página com o conselho/frase obtida
+                document.getElementById("frase-motivacional").textContent = `"${dados.slip.advice}"`;
+            } catch (error) {
+                console.error("Erro ao carregar frase motivacional:", error);
+                document.getElementById("frase-motivacional").textContent = "Não foi possível carregar a frase.";
+            }
+        }
+      
+        // Carregar uma frase quando a página for aberta
+        carregarFrase();
+      </script>
     </div>
   </div>
 
